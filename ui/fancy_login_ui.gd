@@ -136,7 +136,7 @@ func _create_logo_section(parent: Control) -> void:
 	title_label.text = "SURGICALSIM"
 	title_label.add_theme_font_size_override("font_size", 36)
 	title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title_label.add_theme_color_override("font_color", Color.white)
+	title_label.add_theme_color_override("font_color", Color(1, 1, 1))
 	logo_vbox.add_child(title_label)
 	
 	# Subtitle
@@ -177,16 +177,16 @@ func _create_form_section(parent: Control) -> void:
 	form_title.text = "Welcome Back"
 	form_title.add_theme_font_size_override("font_size", 24)
 	form_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	form_title.add_theme_color_override("font_color", Color.white)
+	form_title.add_theme_color_override("font_color", Color(1, 1, 1))
 	form_vbox.add_child(form_title)
 	
 	# Email input
-	email_input = _create_styled_input("Email", "Enter your email")
-	form_vbox.add_child(email_input)
+	var email_container = _create_styled_input("Email", "Enter your email")
+	form_vbox.add_child(email_container)
 	
 	# Password input
-	password_input = _create_styled_input("Password", "Enter your password", true)
-	form_vbox.add_child(password_input)
+	var password_container = _create_styled_input("Password", "Enter your password", true)
+	form_vbox.add_child(password_container)
 	
 	# Status label
 	status_label = Label.new()
@@ -334,7 +334,7 @@ func _create_primary_button(text: String) -> Button:
 	pressed_style.bg_color = secondary_color
 	button.add_theme_stylebox_override("pressed", pressed_style)
 	
-	button.add_theme_color_override("font_color", Color.white)
+	button.add_theme_color_override("font_color", Color(1, 1, 1))
 	
 	return button
 
@@ -361,7 +361,7 @@ func _create_secondary_button(text: String) -> Button:
 	hover_style.bg_color = Color(0.25, 0.25, 0.33)
 	button.add_theme_stylebox_override("hover", hover_style)
 	
-	button.add_theme_color_override("font_color", Color.white)
+	button.add_theme_color_override("font_color", Color(1, 1, 1))
 	
 	return button
 

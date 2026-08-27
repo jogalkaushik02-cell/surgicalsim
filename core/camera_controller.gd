@@ -18,6 +18,7 @@ var last_touch_position: Vector2 = Vector2.ZERO
 var touch_count: int = 0
 var pinch_start_distance: float = 0.0
 var initial_zoom: float = 5.0
+var active_touches: Dictionary = {}
 
 func _ready() -> void:
 	# Set initial camera position
@@ -36,6 +37,7 @@ func _input(event: InputEvent) -> void:
 
 func _handle_touch(event: InputEventScreenTouch) -> void:
 	if event.pressed:
+		active_touches[event.index] = event.position
 		touch_count += 1
 		if touch_count == 1:
 			touch_start_position = event.position
@@ -48,19 +50,22 @@ func _handle_touch(event: InputEventScreenTouch) -> void:
 				pinch_start_distance = touch_start_position.distance_to(other_touch)
 				initial_zoom = distance
 	else:
+		active_touches.erase(event.index)
 		touch_count -= 1
 		if touch_count == 0:
 			is_touching = false
 		elif touch_count == 1:
 			# Reset for single touch
-			for i in range(event.index + 1, 10):
-				var touch_pos = Input.get_touchscreen_position(i)
-				if touch_pos != Vector2.ZERO:
-					touch_start_position = touch_pos
-					last_touch_position = touch_pos
+			for i in active_touches:
+				if i != event.index:
+					var touch_pos = active_touches[i]
+					if touch_pos != Vector2.ZERO:
+						touch_start_position = touch_pos
+						last_touch_position = touch_pos
 					break
 
 func _handle_drag(event: InputEventScreenDrag) -> void:
+	active_touches[event.index] = event.position
 	if touch_count == 1 and is_touching:
 		# Single finger: rotate camera
 		var delta = event.position - last_touch_position
@@ -95,9 +100,9 @@ func _handle_mouse_motion(event: InputEventMouseMotion) -> void:
 		_update_camera_position()
 
 func _get_other_touch(exclude_index: int) -> Vector2:
-	for i in range(10):
+	for i in active_touches:
 		if i != exclude_index:
-			var pos = Input.get_touchscreen_position(i)
+			var pos = active_touches[i]
 			if pos != Vector2.ZERO:
 				return pos
 	return Vector2.ZERO

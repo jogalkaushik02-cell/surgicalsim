@@ -10,7 +10,7 @@ var close_button: Button = null
 
 func _ready() -> void:
 	_create_ui()
-	hide()
+	hide_ui()
 	Events.simulation_started.connect(_on_simulation_started)
 
 func _create_ui() -> void:
@@ -90,7 +90,7 @@ func _create_ui() -> void:
 	
 	# Buttons
 	var button_container = HBoxContainer.new()
-	button_container.alignment = Alignment.ALIGNMENT_CENTER
+	button_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	vbox.add_child(button_container)
 	
 	start_button = Button.new()
@@ -180,21 +180,21 @@ func _on_assign_role_pressed(role: int) -> void:
 func _on_start_pressed() -> void:
 	# Start the game
 	NetworkManager.start_game.rpc()
-	hide()
+	hide_ui()
 	Events.log_event("role_assignment_completed")
 
 func _on_close_pressed() -> void:
-	hide()
+	hide_ui()
 
 func _on_simulation_started() -> void:
-	hide()
+	hide_ui()
 
-func show() -> void:
+func show_ui() -> void:
 	visible = true
 	is_visible = true
 	update_player_list()
 
-func hide() -> void:
+func hide_ui() -> void:
 	visible = false
 	is_visible = false
 

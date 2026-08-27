@@ -178,7 +178,7 @@ func _create_surgery_card(surgery: Dictionary) -> PanelContainer:
 	var name_label = Label.new()
 	name_label.text = surgery["name"]
 	name_label.add_theme_font_size_override("font_size", 18)
-	name_label.add_theme_color_override("font_color", Color.white if surgery["status"] == "available" else Color(0.6, 0.6, 0.6))
+	name_label.add_theme_color_override("font_color", Color(1, 1, 1) if surgery["status"] == "available" else Color(0.6, 0.6, 0.6))
 	info.add_child(name_label)
 	
 	var desc_label = Label.new()

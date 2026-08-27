@@ -88,7 +88,7 @@ func _input(event: InputEvent) -> void:
 		_handle_click(event.position)
 
 func _handle_touch(position: Vector2) -> void:
-	var space_state = _get_world_3d().direct_space_state
+	var space_state = get_viewport().get_world_3d().direct_space_state
 	var raycast = _get_raycast_from_screen_position(position)
 	if not raycast:
 		return
@@ -100,7 +100,7 @@ func _handle_touch(position: Vector2) -> void:
 		_deselect_all()
 
 func _handle_click(position: Vector2) -> void:
-	var space_state = _get_world_3d().direct_space_state
+	var space_state = get_viewport().get_world_3d().direct_space_state
 	var raycast = _get_raycast_from_screen_position(position)
 	if not raycast:
 		return

@@ -83,24 +83,24 @@ func _setup_ui() -> void:
 	form_title.text = "Create Account"
 	form_title.add_theme_font_size_override("font_size", 24)
 	form_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	form_title.add_theme_color_override("font_color", Color.white)
+	form_title.add_theme_color_override("font_color", Color(1, 1, 1))
 	form_vbox.add_child(form_title)
 	
 	# Display name input
-	display_name_input = _create_input("Display Name", "Enter your name")
-	form_vbox.add_child(display_name_input)
+	var dn_container = _create_input("Display Name", "Enter your name")
+	form_vbox.add_child(dn_container)
 	
 	# Email input
-	email_input = _create_input("Email", "Enter your email")
-	form_vbox.add_child(email_input)
+	var email_container = _create_input("Email", "Enter your email")
+	form_vbox.add_child(email_container)
 	
 	# Password input
-	password_input = _create_input("Password", "Create a password", true)
-	form_vbox.add_child(password_input)
+	var pw_container = _create_input("Password", "Create a password", true)
+	form_vbox.add_child(pw_container)
 	
 	# Confirm password
-	confirm_password_input = _create_input("Confirm Password", "Confirm your password", true)
-	form_vbox.add_child(confirm_password_input)
+	var cpw_container = _create_input("Confirm Password", "Confirm your password", true)
+	form_vbox.add_child(cpw_container)
 	
 	# Status label
 	status_label = Label.new()
@@ -150,7 +150,7 @@ func _create_header(parent: Control) -> void:
 	title.text = "SURGICALSIM"
 	title.add_theme_font_size_override("font_size", 32)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_color_override("font_color", Color.white)
+	title.add_theme_color_override("font_color", Color(1, 1, 1))
 	logo_vbox.add_child(title)
 	
 	var subtitle = Label.new()
@@ -202,6 +202,12 @@ func _create_input(label_text: String, placeholder: String, is_password: bool = 
 	
 	vbox.add_child(input)
 	
+	match label_text:
+		"Display Name": display_name_input = input
+		"Email": email_input = input
+		"Password": password_input = input
+		"Confirm Password": confirm_password_input = input
+	
 	return vbox
 
 func _create_button(text: String, color: Color) -> Button:
@@ -228,7 +234,7 @@ func _create_button(text: String, color: Color) -> Button:
 	pressed_style.bg_color = color.darkened(0.2)
 	button.add_theme_stylebox_override("pressed", pressed_style)
 	
-	button.add_theme_color_override("font_color", Color.white)
+	button.add_theme_color_override("font_color", Color(1, 1, 1))
 	
 	return button
 

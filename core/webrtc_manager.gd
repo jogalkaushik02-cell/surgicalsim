@@ -45,6 +45,7 @@ func _load_config() -> void:
 			stun_servers = config.get("stun_servers", stun_servers)
 			print("Loaded server config: ", signaling_url)
 	else:
+		push_warning("Failed to load server config, using defaults")
 
 func _process(_delta: float) -> void:
 	if signaling_client:
@@ -205,6 +206,7 @@ func _on_ice_candidate(media: String, index: int, candidate_name: String, remote
 	})
 
 func _on_peer_connected(remote_peer_id: int) -> void:
+	print("Peer connected: ", remote_peer_id)
 
 func _on_peer_disconnected(remote_peer_id: int) -> void:
 	players.erase(remote_peer_id)

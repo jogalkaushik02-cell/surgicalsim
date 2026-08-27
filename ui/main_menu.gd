@@ -100,7 +100,7 @@ func _create_main_panel() -> void:
 	title_label.text = "SURGICALSIM"
 	title_label.add_theme_font_size_override("font_size", 36)
 	title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title_label.add_theme_color_override("font_color", Color.white)
+	title_label.add_theme_color_override("font_color", Color(1, 1, 1))
 	header_vbox.add_child(title_label)
 	
 	# Subtitle
@@ -283,7 +283,7 @@ func _create_menu_button(text: String, color: Color) -> Button:
 	pressed_style.bg_color = color.darkened(0.2)
 	button.add_theme_stylebox_override("pressed", pressed_style)
 	
-	button.add_theme_color_override("font_color", Color.white)
+	button.add_theme_color_override("font_color", Color(1, 1, 1))
 	
 	return button
 
@@ -352,12 +352,12 @@ func _check_auth_state() -> void:
 
 func _show_login_menu() -> void:
 	main_panel.visible = false
-	fancy_login_ui.show()
-	fancy_register_ui.hide()
+	fancy_login_ui.show_ui()
+	fancy_register_ui.hide_ui()
 
 func _show_main_menu() -> void:
-	fancy_login_ui.hide()
-	fancy_register_ui.hide()
+	fancy_login_ui.hide_ui()
+	fancy_register_ui.hide_ui()
 	main_panel.visible = true
 	_update_user_info()
 
@@ -388,8 +388,8 @@ func _on_guest_login() -> void:
 	_show_main_menu()
 
 func _on_back_to_login() -> void:
-	fancy_register_ui.hide()
-	fancy_login_ui.show()
+	fancy_register_ui.hide_ui()
+	fancy_login_ui.show_ui()
 
 func _on_firebase_auth_success(user_data: Dictionary) -> void:
 	_show_main_menu()
@@ -402,14 +402,14 @@ func _on_user_loaded(user_data: Dictionary) -> void:
 func _on_single_player_pressed() -> void:
 	RoleSystem.is_single_player = true
 	RoleSystem.set_local_role(RoleSystem.Role.LEAD_SURGEON)
-	hide()
+	hide_ui()
 	Events.log_event("single_player_selected")
 
 func _on_multiplayer_pressed() -> void:
 	var role_ui = get_node_or_null("/root/MainScene/RoleAssignmentUI")
 	if role_ui:
-		role_ui.show()
-	hide()
+		role_ui.show_ui()
+	hide_ui()
 
 func _on_online_pressed() -> void:
 	online_lobby_ui.show_lobby()
@@ -435,9 +435,9 @@ func _on_quit_pressed() -> void:
 func _on_tutorial_completed() -> void:
 	AchievementSystem.on_tutorial_completed()
 
-func show() -> void:
+func show_ui() -> void:
 	visible = true
 	_check_auth_state()
 
-func hide() -> void:
+func hide_ui() -> void:
 	visible = false
