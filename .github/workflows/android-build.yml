@@ -26,8 +26,9 @@ jobs:
 
       - name: Install Android export templates
         run: |
-          mkdir -p "$HOME/.local/share/godot/export_templates/4.2.2.stable"
-          cd "$HOME/.local/share/godot/export_templates/4.2.2.stable"
+          TEMPLATES_DIR="$HOME/.local/share/godot/export_templates/4.2.2.stable"
+          mkdir -p "$TEMPLATES_DIR"
+          cd "$TEMPLATES_DIR"
           wget -q https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_export_templates.tpz
           unzip -q Godot_v4.2.2-stable_export_templates.tpz
           mv templates/* .
@@ -36,33 +37,47 @@ jobs:
 
       - name: Setup debug keystore
         run: |
-          keytool -genkey -v -keystore "$HOME/.config/godot/keystores/debug.keystore" \
-            -alias androiddebugkey -keyalg RSA -keysize 2048 -validity 10000 \
+          KEYSTORE_DIR="$HOME/.config/godot/keystores"
+          mkdir -p "$KEYSTORE_DIR"
+          keytool -genkey -v \
+            -keystore "$KEYSTORE_DIR/debug.keystore" \
+            -alias androiddebugkey \
+            -keyalg RSA -keysize 2048 -validity 10000 \
             -storepass android -keypass android \
             -dname "CN=Android Debug,O=Android,C=US"
+          echo "KEYSTORE_PATH=$KEYSTORE_DIR/debug.keystore" >> $GITHUB_ENV
 
-      - name: Configure Godot editor settings for keystore
+      - name: Initialize Godot editor
         run: |
-          mkdir -p "$HOME/.config/godot"
-          cat >> "$HOME/.config/godot/editor_settings-4.tres" << 'EOF'
-          [gd_resource type="EditorSettings" format=3]
+          godot --headless --path . --editor --quit 2>&1 || true
 
-          [resource]
-          export/android/debug_keystore = "/home/runner/.config/godot/keystores/debug.keystore"
-          export/android/debug_keystore_user = "androiddebugkey"
-          export/android/debug_keystore_pass = "android"
-          EOF
-
-      - name: Validate Godot project
+      - name: Configure editor keystore settings
         run: |
-          godot --headless --path . --editor --quit
+          EDITOR_CFG="$HOME/.config/godot/editor_settings-4.tres"
+          if [ ! -f "$EDITOR_CFG" ]; then
+            echo "[gd_resource type=\"EditorSettings\" format=3]" > "$EDITOR_CFG"
+            echo "" >> "$EDITOR_CFG"
+            echo "[resource]" >> "$EDITOR_CFG"
+          fi
+          sed -i '/export\/android\/debug_keystore/d' "$EDITOR_CFG"
+          sed -i '/export\/android\/debug_keystore_user/d' "$EDITOR_CFG"
+          sed -i '/export\/android\/debug_keystore_pass/d' "$EDITOR_CFG"
+          sed -i '/\[resource\]/a export/android/debug_keystore = "'"$KEYSTORE_PATH"'"' "$EDITOR_CFG"
+          sed -i '/debug_keystore =/a export/android/debug_keystore_user = "androiddebugkey"' "$EDITOR_CFG"
+          sed -i '/debug_keystore_user/a export/android/debug_keystore_pass = "android"' "$EDITOR_CFG"
 
       - name: Check Android export preset
         run: |
           if [ ! -f "export_presets.cfg" ]; then
-            echo "::error::export_presets.cfg is missing. Create an Android export preset in Godot before Android builds can run."
+            echo "::error::export_presets.cfg is missing."
             exit 1
           fi
+
+      - name: Configure export preset keystore
+        run: |
+          sed -i 's|keystore/debug=""|keystore/debug="'"$KEYSTORE_PATH"'"|' export_presets.cfg
+          sed -i 's|keystore/debug_user=""|keystore/debug_user="androiddebugkey"|' export_presets.cfg
+          sed -i 's|keystore/debug_password=""|keystore/debug_password="android"|' export_presets.cfg
 
       - name: Export Android APK
         run: |
