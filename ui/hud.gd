@@ -38,7 +38,7 @@ func _create_top_bar(parent: Control) -> void:
 	time_label = Label.new()
 	time_label.name = "TimeLabel"
 	time_label.text = "Time: 00:00"
-	time_label.add_theme_font_size_override("font_size", 20)
+	time_label.add_theme_font_size_override("font_size", 16)
 	top_bar.add_child(time_label)
 	
 	var spacer = Control.new()
@@ -48,7 +48,7 @@ func _create_top_bar(parent: Control) -> void:
 	score_label = Label.new()
 	score_label.name = "ScoreLabel"
 	score_label.text = "Score: 0/100"
-	score_label.add_theme_font_size_override("font_size", 20)
+	score_label.add_theme_font_size_override("font_size", 16)
 	top_bar.add_child(score_label)
 	
 	var spacer2 = Control.new()
@@ -58,13 +58,13 @@ func _create_top_bar(parent: Control) -> void:
 	event_count_label = Label.new()
 	event_count_label.name = "EventCountLabel"
 	event_count_label.text = "Events: 0"
-	event_count_label.add_theme_font_size_override("font_size", 20)
+	event_count_label.add_theme_font_size_override("font_size", 16)
 	top_bar.add_child(event_count_label)
 
 func _create_surgical_panel(parent: Control) -> void:
 	var panel = PanelContainer.new()
 	panel.name = "SurgicalPanel"
-	panel.custom_minimum_size = Vector2(200, 150)
+	panel.custom_minimum_size = Vector2(180, 120)
 	parent.add_child(panel)
 	
 	var margin = MarginContainer.new()
@@ -75,56 +75,56 @@ func _create_surgical_panel(parent: Control) -> void:
 	
 	var title = Label.new()
 	title.text = "SURGICAL STATUS"
-	title.add_theme_font_size_override("font_size", 16)
+	title.add_theme_font_size_override("font_size", 13)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 	
 	var state_label = Label.new()
 	state_label.name = "StateLabel"
 	state_label.text = "State: READY"
-	state_label.add_theme_font_size_override("font_size", 14)
+	state_label.add_theme_font_size_override("font_size", 11)
 	vbox.add_child(state_label)
 	surgical_labels["state"] = state_label
 	
 	var inst_label = Label.new()
 	inst_label.name = "InstrumentLabel"
 	inst_label.text = "Instrument: None"
-	inst_label.add_theme_font_size_override("font_size", 14)
+	inst_label.add_theme_font_size_override("font_size", 11)
 	vbox.add_child(inst_label)
 	surgical_labels["instrument"] = inst_label
 	
 	var target_label = Label.new()
 	target_label.name = "TargetLabel"
 	target_label.text = "Target: None"
-	target_label.add_theme_font_size_override("font_size", 14)
+	target_label.add_theme_font_size_override("font_size", 11)
 	vbox.add_child(target_label)
 	surgical_labels["target"] = target_label
 	
 	var interactions_label = Label.new()
 	interactions_label.name = "InteractionsLabel"
 	interactions_label.text = "Interactions: 0 (0 valid)"
-	interactions_label.add_theme_font_size_override("font_size", 14)
+	interactions_label.add_theme_font_size_override("font_size", 11)
 	vbox.add_child(interactions_label)
 	surgical_labels["interactions"] = interactions_label
 	
 	var step_label = Label.new()
 	step_label.name = "StepLabel"
 	step_label.text = "Step: NOT_STARTED"
-	step_label.add_theme_font_size_override("font_size", 14)
+	step_label.add_theme_font_size_override("font_size", 11)
 	vbox.add_child(step_label)
 	surgical_labels["step"] = step_label
 	
 	var progress_label = Label.new()
 	progress_label.name = "ProgressLabel"
 	progress_label.text = "Progress: 0%"
-	progress_label.add_theme_font_size_override("font_size", 14)
+	progress_label.add_theme_font_size_override("font_size", 11)
 	vbox.add_child(progress_label)
 	surgical_labels["progress"] = progress_label
 
 func _create_vital_signs_panel(parent: Control) -> void:
 	var panel = PanelContainer.new()
 	panel.name = "VitalSignsPanel"
-	panel.custom_minimum_size = Vector2(200, 150)
+	panel.custom_minimum_size = Vector2(180, 120)
 	parent.add_child(panel)
 	
 	var margin = MarginContainer.new()
@@ -135,7 +135,7 @@ func _create_vital_signs_panel(parent: Control) -> void:
 	
 	var title = Label.new()
 	title.text = "VITAL SIGNS"
-	title.add_theme_font_size_override("font_size", 16)
+	title.add_theme_font_size_override("font_size", 13)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 	
@@ -144,14 +144,14 @@ func _create_vital_signs_panel(parent: Control) -> void:
 		var label = Label.new()
 		label.name = vital + "Label"
 		label.text = vital + ": --"
-		label.add_theme_font_size_override("font_size", 14)
+		label.add_theme_font_size_override("font_size", 11)
 		vbox.add_child(label)
 		vital_labels[vital] = label
 
 func _create_debug_display(parent: Control) -> void:
 	var panel = PanelContainer.new()
 	panel.name = "DebugPanel"
-	panel.custom_minimum_size = Vector2(250, 80)
+	panel.custom_minimum_size = Vector2(200, 70)
 	parent.add_child(panel)
 	
 	var margin = MarginContainer.new()
@@ -162,7 +162,7 @@ func _create_debug_display(parent: Control) -> void:
 	
 	var title = Label.new()
 	title.text = "DEBUG INFO"
-	title.add_theme_font_size_override("font_size", 14)
+	title.add_theme_font_size_override("font_size", 11)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 	
@@ -171,7 +171,7 @@ func _create_debug_display(parent: Control) -> void:
 		var label = Label.new()
 		label.name = item + "Label"
 		label.text = item + ": --"
-		label.add_theme_font_size_override("font_size", 12)
+		label.add_theme_font_size_override("font_size", 10)
 		vbox.add_child(label)
 		debug_labels[item] = label
 

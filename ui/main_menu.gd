@@ -58,14 +58,15 @@ func _create_main_panel() -> void:
 	
 	var main_container = VBoxContainer.new()
 	main_container.set_anchors_preset(Control.PRESET_CENTER)
-	main_container.custom_minimum_size = Vector2(500, 600)
-	main_container.position = Vector2(-250, -300)
+	main_container.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	main_container.grow_vertical = Control.GROW_DIRECTION_BOTH
+	main_container.custom_minimum_size = Vector2(400, 500)
 	main_container.add_theme_constant_override("separation", 15)
 	main_panel.add_child(main_container)
 	
 	# Header panel with glass effect
 	var header_panel = PanelContainer.new()
-	header_panel.custom_minimum_size = Vector2(450, 120)
+	header_panel.custom_minimum_size = Vector2(350, 100)
 	main_container.add_child(header_panel)
 	
 	var header_style = StyleBoxFlat.new()
@@ -126,7 +127,7 @@ func _create_main_panel() -> void:
 	
 	# Menu buttons panel
 	var menu_panel = PanelContainer.new()
-	menu_panel.custom_minimum_size = Vector2(450, 350)
+	menu_panel.custom_minimum_size = Vector2(350, 300)
 	main_container.add_child(menu_panel)
 	
 	var menu_style = StyleBoxFlat.new()
@@ -262,7 +263,7 @@ func _create_child_uis() -> void:
 func _create_menu_button(text: String, color: Color) -> Button:
 	var button = Button.new()
 	button.text = text
-	button.custom_minimum_size = Vector2(400, 55)
+	button.custom_minimum_size = Vector2(320, 50)
 	button.add_theme_font_size_override("font_size", 18)
 	
 	var style = StyleBoxFlat.new()
@@ -290,7 +291,7 @@ func _create_menu_button(text: String, color: Color) -> Button:
 func _create_small_button(text: String) -> Button:
 	var button = Button.new()
 	button.text = text
-	button.custom_minimum_size = Vector2(130, 40)
+	button.custom_minimum_size = Vector2(100, 35)
 	button.add_theme_font_size_override("font_size", 14)
 	
 	var style = StyleBoxFlat.new()
@@ -319,7 +320,7 @@ func _create_particles(parent: Control) -> void:
 		var particle = ColorRect.new()
 		particle.color = Color(0.2, 0.8, 0.4, 0.15)
 		particle.custom_minimum_size = Vector2(randi_range(5, 15), randi_range(5, 15))
-		particle.position = Vector2(randf_range(0, 1280), randf_range(0, 720))
+		particle.position = Vector2(randf_range(0, get_viewport_rect().size.x), randf_range(0, get_viewport_rect().size.y))
 		particle.name = "Particle_%d" % i
 		parent.add_child(particle)
 
@@ -345,6 +346,8 @@ func _check_auth_state() -> void:
 		_show_main_menu()
 	elif AuthManager.is_logged_in():
 		_show_main_menu()
+	elif FirebaseAuth.api_key.is_empty():
+		_show_login_menu()
 	else:
 		_show_login_menu()
 

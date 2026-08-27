@@ -65,9 +65,10 @@ func _setup_ui() -> void:
 	# Main container
 	var main_container = VBoxContainer.new()
 	main_container.set_anchors_preset(Control.PRESET_CENTER)
-	main_container.custom_minimum_size = Vector2(500, 700)
-	main_container.position = Vector2(-250, -350)
-	main_container.add_theme_constant_override("separation", 20)
+	main_container.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	main_container.grow_vertical = Control.GROW_DIRECTION_BOTH
+	main_container.custom_minimum_size = Vector2(400, 500)
+	main_container.add_theme_constant_override("separation", 15)
 	add_child(main_container)
 	
 	# Logo section
@@ -100,7 +101,7 @@ func _setup_ui() -> void:
 func _create_logo_section(parent: Control) -> void:
 	# Logo panel with glass effect
 	logo_panel = PanelContainer.new()
-	logo_panel.custom_minimum_size = Vector2(400, 120)
+	logo_panel.custom_minimum_size = Vector2(350, 100)
 	parent.add_child(logo_panel)
 	
 	var logo_style = StyleBoxFlat.new()
@@ -150,7 +151,7 @@ func _create_logo_section(parent: Control) -> void:
 func _create_form_section(parent: Control) -> void:
 	# Form panel with glass effect
 	form_panel = PanelContainer.new()
-	form_panel.custom_minimum_size = Vector2(400, 350)
+	form_panel.custom_minimum_size = Vector2(350, 300)
 	parent.add_child(form_panel)
 	
 	var form_style = StyleBoxFlat.new()
@@ -239,7 +240,7 @@ func _create_social_section(parent: Control) -> void:
 	# Guest button
 	guest_button = Button.new()
 	guest_button.text = "Continue as Guest"
-	guest_button.custom_minimum_size = Vector2(400, 50)
+	guest_button.custom_minimum_size = Vector2(350, 50)
 	guest_button.add_theme_font_size_override("font_size", 16)
 	guest_button.pressed.connect(_on_guest_pressed)
 	parent.add_child(guest_button)
@@ -273,7 +274,7 @@ func _create_styled_input(label_text: String, placeholder: String, is_password: 
 	
 	var input = LineEdit.new()
 	input.placeholder_text = placeholder
-	input.custom_minimum_size = Vector2(360, 45)
+	input.custom_minimum_size = Vector2(320, 40)
 	input.add_theme_font_size_override("font_size", 16)
 	
 	if is_password:
@@ -313,7 +314,7 @@ func _create_styled_input(label_text: String, placeholder: String, is_password: 
 func _create_primary_button(text: String) -> Button:
 	var button = Button.new()
 	button.text = text
-	button.custom_minimum_size = Vector2(360, 50)
+	button.custom_minimum_size = Vector2(320, 50)
 	button.add_theme_font_size_override("font_size", 18)
 	
 	var style = StyleBoxFlat.new()
@@ -341,7 +342,7 @@ func _create_primary_button(text: String) -> Button:
 func _create_secondary_button(text: String) -> Button:
 	var button = Button.new()
 	button.text = text
-	button.custom_minimum_size = Vector2(360, 50)
+	button.custom_minimum_size = Vector2(320, 50)
 	button.add_theme_font_size_override("font_size", 16)
 	
 	var style = StyleBoxFlat.new()

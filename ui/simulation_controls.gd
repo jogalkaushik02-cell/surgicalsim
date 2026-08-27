@@ -15,37 +15,40 @@ func _create_ui() -> void:
 	var container = VBoxContainer.new()
 	container.name = "ButtonContainer"
 	container.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
-	container.offset_left = -150
-	container.offset_top = -200
+	container.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	container.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	container.offset_left = -160
+	container.offset_top = -220
 	container.offset_right = -10
 	container.offset_bottom = -10
+	container.add_theme_constant_override("separation", 8)
 	add_child(container)
 	
 	start_button = Button.new()
 	start_button.name = "StartButton"
 	start_button.text = "Start Simulation"
-	start_button.custom_minimum_size = Vector2(140, 50)
+	start_button.custom_minimum_size = Vector2(150, 50)
 	start_button.pressed.connect(_on_start_pressed)
 	container.add_child(start_button)
 	
 	pause_button = Button.new()
 	pause_button.name = "PauseButton"
 	pause_button.text = "Pause"
-	pause_button.custom_minimum_size = Vector2(140, 50)
+	pause_button.custom_minimum_size = Vector2(150, 50)
 	pause_button.pressed.connect(_on_pause_pressed)
 	container.add_child(pause_button)
 	
 	resume_button = Button.new()
 	resume_button.name = "ResumeButton"
 	resume_button.text = "Resume"
-	resume_button.custom_minimum_size = Vector2(140, 50)
+	resume_button.custom_minimum_size = Vector2(150, 50)
 	resume_button.pressed.connect(_on_resume_pressed)
 	container.add_child(resume_button)
 	
 	end_button = Button.new()
 	end_button.name = "EndButton"
 	end_button.text = "End Simulation"
-	end_button.custom_minimum_size = Vector2(140, 50)
+	end_button.custom_minimum_size = Vector2(150, 50)
 	end_button.pressed.connect(_on_end_pressed)
 	container.add_child(end_button)
 

@@ -46,8 +46,9 @@ func _setup_ui() -> void:
 	# Main container
 	var main_container = VBoxContainer.new()
 	main_container.set_anchors_preset(Control.PRESET_CENTER)
-	main_container.custom_minimum_size = Vector2(500, 700)
-	main_container.position = Vector2(-250, -350)
+	main_container.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	main_container.grow_vertical = Control.GROW_DIRECTION_BOTH
+	main_container.custom_minimum_size = Vector2(400, 500)
 	main_container.add_theme_constant_override("separation", 15)
 	add_child(main_container)
 	
@@ -56,7 +57,7 @@ func _setup_ui() -> void:
 	
 	# Form panel
 	var form_panel = PanelContainer.new()
-	form_panel.custom_minimum_size = Vector2(400, 450)
+	form_panel.custom_minimum_size = Vector2(350, 400)
 	main_container.add_child(form_panel)
 	
 	var form_style = StyleBoxFlat.new()
@@ -172,7 +173,7 @@ func _create_input(label_text: String, placeholder: String, is_password: bool = 
 	
 	var input = LineEdit.new()
 	input.placeholder_text = placeholder
-	input.custom_minimum_size = Vector2(360, 45)
+	input.custom_minimum_size = Vector2(320, 40)
 	input.add_theme_font_size_override("font_size", 16)
 	
 	if is_password:
@@ -213,7 +214,7 @@ func _create_input(label_text: String, placeholder: String, is_password: bool = 
 func _create_button(text: String, color: Color) -> Button:
 	var button = Button.new()
 	button.text = text
-	button.custom_minimum_size = Vector2(360, 50)
+	button.custom_minimum_size = Vector2(320, 50)
 	button.add_theme_font_size_override("font_size", 16)
 	
 	var style = StyleBoxFlat.new()
@@ -250,7 +251,7 @@ func _create_password_strength(parent: Control) -> void:
 	strength_container.add_child(strength_label)
 	
 	var strength_bar = ProgressBar.new()
-	strength_bar.custom_minimum_size = Vector2(360, 8)
+	strength_bar.custom_minimum_size = Vector2(320, 8)
 	strength_bar.max_value = 100
 	strength_bar.value = 0
 	strength_bar.show_percentage = false
