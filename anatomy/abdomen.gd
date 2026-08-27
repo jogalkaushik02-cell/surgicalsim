@@ -1,4 +1,4 @@
-extends "res://anatomy/anatomical_object.gd"
+extends AnatomicalObject
 
 ## Abdomen - Abdominal wall structure
 
@@ -53,18 +53,20 @@ func _show_interact_flash() -> void:
 
 func interact(tool_name: String) -> void:
 	super.interact(tool_name)
-	match tool_name:
-		"Scalpel":
-			Events.log_event("abdomen_incised", {"tool": tool_name})
-			print("Abdomen incised")
-		"Retractor":
-			Events.log_event("abdomen_retracted", {"tool": tool_name})
-			print("Abdomen retracted")
-		"Suture":
-			Events.log_event("abdomen_sutured", {"tool": tool_name})
-			print("Abdomen sutured")
-		_:
-			Events.log_event("abdomen_touched", {"tool": tool_name})
+	var events = get_node_or_null("/root/Events")
+	if events:
+		match tool_name:
+			"Scalpel":
+				events.log_event("abdomen_incised", {"tool": tool_name})
+				print("Abdomen incised")
+			"Retractor":
+				events.log_event("abdomen_retracted", {"tool": tool_name})
+				print("Abdomen retracted")
+			"Suture":
+				events.log_event("abdomen_sutured", {"tool": tool_name})
+				print("Abdomen sutured")
+			_:
+				events.log_event("abdomen_touched", {"tool": tool_name})
 
 func get_info() -> Dictionary:
 	var info = super.get_info()

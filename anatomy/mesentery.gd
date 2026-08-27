@@ -1,4 +1,4 @@
-extends "res://anatomy/anatomical_object.gd"
+extends AnatomicalObject
 
 ## Mesentery - Tissue connecting appendix to cecum
 
@@ -56,15 +56,17 @@ func _show_interact_flash() -> void:
 
 func interact(tool_name: String) -> void:
 	super.interact(tool_name)
-	match tool_name:
-		"Scalpel":
-			Events.log_event("mesentery_divided", {"tool": tool_name})
-			print("Mesentery divided")
-		"Forceps":
-			Events.log_event("mesentery_grasped", {"tool": tool_name})
-			print("Mesentery grasped")
-		_:
-			Events.log_event("mesentery_touched", {"tool": tool_name})
+	var events = get_node_or_null("/root/Events")
+	if events:
+		match tool_name:
+			"Scalpel":
+				events.log_event("mesentery_divided", {"tool": tool_name})
+				print("Mesentery divided")
+			"Forceps":
+				events.log_event("mesentery_grasped", {"tool": tool_name})
+				print("Mesentery grasped")
+			_:
+				events.log_event("mesentery_touched", {"tool": tool_name})
 
 func get_info() -> Dictionary:
 	var info = super.get_info()

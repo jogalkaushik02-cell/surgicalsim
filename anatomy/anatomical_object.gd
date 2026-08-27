@@ -1,3 +1,4 @@
+class_name AnatomicalObject
 extends Node3D
 
 ## AnatomicalObject - Base class for interactive anatomy
@@ -13,8 +14,10 @@ var selected_material: StandardMaterial3D = null
 
 func _ready() -> void:
 	_setup_materials()
-	Events.anatomy_selected.connect(_on_anatomy_selected)
-	Events.anatomy_deselected.connect(_on_anatomy_deselected)
+	var events = get_node_or_null("/root/Events")
+	if events:
+		events.anatomy_selected.connect(_on_anatomy_selected)
+		events.anatomy_deselected.connect(_on_anatomy_deselected)
 
 func _setup_materials() -> void:
 	# Original material
@@ -34,14 +37,18 @@ func select() -> void:
 	
 	is_selected = true
 	_apply_material(selected_material)
-	Events.anatomy_selected.emit(anatomy_name)
-	Events.log_event("anatomy_selected", {"name": anatomy_name})
+	var events = get_node_or_null("/root/Events")
+	if events:
+		events.anatomy_selected.emit(anatomy_name)
+		events.log_event("anatomy_selected", {"name": anatomy_name})
 
 func deselect() -> void:
 	is_selected = false
 	_apply_material(original_material)
-	Events.anatomy_deselected.emit()
-	Events.log_event("anatomy_deselected", {"name": anatomy_name})
+	var events = get_node_or_null("/root/Events")
+	if events:
+		events.anatomy_deselected.emit()
+		events.log_event("anatomy_deselected", {"name": anatomy_name})
 
 func _apply_material(material: StandardMaterial3D) -> void:
 	# Apply material to all mesh children
@@ -53,10 +60,12 @@ func interact(tool_name: String) -> void:
 	if not is_interactable:
 		return
 	
-	Events.log_event("anatomy_interacted", {
-		"name": anatomy_name,
-		"tool": tool_name
-	})
+	var events = get_node_or_null("/root/Events")
+	if events:
+		events.log_event("anatomy_interacted", {
+			"name": anatomy_name,
+			"tool": tool_name
+		})
 
 func get_info() -> Dictionary:
 	return {

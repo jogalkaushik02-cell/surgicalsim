@@ -1,4 +1,4 @@
-extends "res://anatomy/anatomical_object.gd"
+extends AnatomicalObject
 
 ## Appendix - Specific anatomical object for appendicectomy
 
@@ -83,15 +83,17 @@ func _show_cut_flash() -> void:
 
 func interact(tool_name: String) -> void:
 	super.interact(tool_name)
-	match tool_name:
-		"Scalpel":
-			Events.log_event("appendix_incision", {"tool": tool_name})
-			print("Incision made on appendix")
-		"Forceps":
-			Events.log_event("appendix_grasped", {"tool": tool_name})
-			print("Appendix grasped")
-		_:
-			Events.log_event("appendix_touched", {"tool": tool_name})
+	var events = get_node_or_null("/root/Events")
+	if events:
+		match tool_name:
+			"Scalpel":
+				events.log_event("appendix_incision", {"tool": tool_name})
+				print("Incision made on appendix")
+			"Forceps":
+				events.log_event("appendix_grasped", {"tool": tool_name})
+				print("Appendix grasped")
+			_:
+				events.log_event("appendix_touched", {"tool": tool_name})
 
 func get_info() -> Dictionary:
 	var info = super.get_info()

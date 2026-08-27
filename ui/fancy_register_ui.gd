@@ -377,11 +377,11 @@ func _is_valid_email(email: String) -> bool:
 	regex.compile("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
 	return regex.search(email) != null
 
-func show() -> void:
+func show_ui() -> void:
 	visible = true
 	modulate.a = 0.0
 	var tween = create_tween()
 	tween.tween_property(self, "modulate:a", 1.0, 0.5)
 
-func hide() -> void:
+func hide_ui() -> void:
 	visible = false
