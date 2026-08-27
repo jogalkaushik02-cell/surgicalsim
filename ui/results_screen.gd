@@ -59,13 +59,13 @@ func _update_results() -> void:
 	
 	var text = "[center][b]SIMULATION COMPLETE[/b][/center]\n\n"
 	text += "[b]Duration:[/b] %s\n" % SimulationManager.get_formatted_time()
-	text += "[b]Start Time:[/b] %s\n" % results.start_time
-	text += "[b]End Time:[/b] %s\n\n" % results.end_time
+	text += "[b]Start Time:[/b] %s\n" % results.get("start_time", "")
+	text += "[b]End Time:[/b] %s\n\n" % results.get("end_time", "")
 	
-	text += "[b]FINAL SCORE:[/b] %d/%d\n\n" % [results.score, results.max_score]
+	text += "[b]FINAL SCORE:[/b] %d/%d\n\n" % [results.get("score", 0), results.get("max_score", 100)]
 	
 	text += "[b]FINAL VITALS:[/b]\n"
-	var vitals = results.final_vitals
+	var vitals = results.get("final_vitals", {})
 	text += "  Heart Rate: %d bpm\n" % vitals.get("heart_rate", 0)
 	text += "  Blood Pressure: %d/%d mmHg\n" % [vitals.get("systolic_bp", 0), vitals.get("diastolic_bp", 0)]
 	text += "  SpO2: %d%%\n" % vitals.get("spo2", 0)
@@ -83,10 +83,10 @@ func _update_results() -> void:
 		text += "[b]BLEEDING STATUS:[/b] No active bleeding\n\n"
 	
 	text += "[b]INTERACTION SUMMARY:[/b]\n"
-	text += "  Total Interactions: %d\n" % results.interaction_count
-	text += "  Valid Interactions: %d\n" % results.valid_interaction_count
-	text += "  Invalid Interactions: %d\n" % results.invalid_interaction_count
-	text += "  Final State: %s\n\n" % results.final_surgical_state
+	text += "  Total Interactions: %d\n" % results.get("interaction_count", 0)
+	text += "  Valid Interactions: %d\n" % results.get("valid_interaction_count", 0)
+	text += "  Invalid Interactions: %d\n" % results.get("invalid_interaction_count", 0)
+	text += "  Final State: %s\n\n" % results.get("final_surgical_state", "UNKNOWN")
 	
 	# Show appendicectomy progress
 	var interaction_mgr = get_node_or_null("/root/MainScene/InteractionManager")
@@ -115,7 +115,7 @@ func _update_results() -> void:
 		text += "  Grade: %s\n\n" % evaluation.get("grade", "N/A")
 	
 	text += "\n[b]SURGICAL EVENTS:[/b]\n"
-	var surgical_events = results.surgical_events
+	var surgical_events = results.get("surgical_events", [])
 	for event in surgical_events:
 		text += "  [%s] %s / %s / %s / %s\n" % [
 			event.get("elapsed_time", "00:00"),
@@ -129,7 +129,7 @@ func _update_results() -> void:
 		text += "  No surgical events recorded\n"
 	
 	text += "\n[b]ALL EVENTS:[/b]\n"
-	text += "  Total Events: %d\n\n" % results.event_count
+	text += "  Total Events: %d\n\n" % results.get("event_count", 0)
 	
 	text += "[center][i]Version 1.0.0[/i][/center]"
 	

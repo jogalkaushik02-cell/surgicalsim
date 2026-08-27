@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://main_scene"]
+[gd_scene load_steps=22 format=3 uid="uid://main_scene"]
 
 [ext_resource type="Script" path="res://core/camera_controller.gd" id="1"]
 [ext_resource type="Script" path="res://patient/operating_table.gd" id="2"]
@@ -21,12 +21,14 @@
 [ext_resource type="Script" path="res://ui/achievement_ui.gd" id="19"]
 [ext_resource type="Script" path="res://ui/surgery_catalog_ui.gd" id="20"]
 [ext_resource type="Script" path="res://ui/online_lobby_ui.gd" id="21"]
+[ext_resource type="Script" path="res://patient/team_member.gd" id="22"]
+[ext_resource type="Script" path="res://ui/android_ui.gd" id="23"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
-sky_top_color = Color(0.2, 0.2, 0.3, 1)
-sky_horizon_color = Color(0.4, 0.4, 0.5, 1)
-ground_bottom_color = Color(0.1, 0.1, 0.15, 1)
-ground_horizon_color = Color(0.3, 0.3, 0.35, 1)
+sky_top_color = Color(0.25, 0.28, 0.35, 1)
+sky_horizon_color = Color(0.45, 0.48, 0.55, 1)
+ground_bottom_color = Color(0.12, 0.13, 0.18, 1)
+ground_horizon_color = Color(0.35, 0.38, 0.42, 1)
 
 [sub_resource type="Sky" id="sky"]
 sky_material = SubResource("sky_mat")
@@ -35,26 +37,30 @@ sky_material = SubResource("sky_mat")
 background_mode = 2
 sky = SubResource("sky")
 ambient_light_source = 2
-ambient_light_color = Color(0.5, 0.5, 0.6, 1)
-ambient_light_energy = 0.5
+ambient_light_color = Color(0.6, 0.6, 0.65, 1)
+ambient_light_energy = 0.6
 tonemap_mode = 2
-ssao_enabled = true
 fog_enabled = true
-fog_light_color = Color(0.5, 0.5, 0.6, 1)
-fog_density = 0.01
+fog_light_color = Color(0.55, 0.58, 0.62, 1)
+fog_density = 0.008
 
 [sub_resource type="BoxMesh" id="floor_mesh"]
 size = Vector3(10, 0.1, 10)
 
 [sub_resource type="StandardMaterial3D" id="floor_mat"]
-albedo_color = Color(0.3, 0.35, 0.4, 1)
-metallic = 0.1
-roughness = 0.8
+albedo_color = Color(0.35, 0.38, 0.42, 1)
+metallic = 0.05
+roughness = 0.85
 
 [sub_resource type="StandardMaterial3D" id="wall_mat"]
-albedo_color = Color(0.7, 0.75, 0.8, 1)
+albedo_color = Color(0.75, 0.78, 0.82, 1)
 metallic = 0.0
 roughness = 0.9
+
+[sub_resource type="StandardMaterial3D" id="ceiling_mat"]
+albedo_color = Color(0.85, 0.87, 0.9, 1)
+metallic = 0.0
+roughness = 0.95
 
 [node name="MainScene" type="Node3D"]
 
@@ -64,11 +70,11 @@ environment = SubResource("env")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.707, 0.707, 0, -0.707, 0.707, 0, 5, 0)
 light_color = Color(1, 0.98, 0.95, 1)
-light_energy = 1.0
+light_energy = 0.8
 shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.866, 0.5, 0, -0.5, 0.866, 0, 4, 6)
+transform = Transform3D(0.94, 0.13, -0.31, 0, 0.92, 0.39, 0.34, -0.37, 0.87, 0, 2.5, 3.5)
 script = ExtResource("1")
 
 [node name="OperatingRoom" type="Node3D" parent="."]
@@ -101,7 +107,7 @@ material_override = SubResource("wall_mat")
 [node name="Ceiling" type="MeshInstance3D" parent="OperatingRoom"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 mesh = SubResource("floor_mesh")
-material_override = SubResource("wall_mat")
+material_override = SubResource("ceiling_mat")
 
 [node name="SurgeryArea" type="Node3D" parent="."]
 
@@ -109,57 +115,104 @@ material_override = SubResource("wall_mat")
 script = ExtResource("2")
 
 [node name="Patient" type="Node3D" parent="SurgeryArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92, 0)
 script = ExtResource("3")
 
 [node name="Appendix" type="Node3D" parent="SurgeryArea/Patient"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0.15)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02, 0.08, 0.12)
 script = ExtResource("4")
 
 [node name="Cecum" type="Node3D" parent="SurgeryArea/Patient"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 0.06, 0.08)
 script = ExtResource("13")
 
 [node name="Mesentery" type="Node3D" parent="SurgeryArea/Patient"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0.12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.03, 0.07, 0.1)
 script = ExtResource("15")
 
 [node name="Abdomen" type="Node3D" parent="SurgeryArea/Patient"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0.18)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0.05)
 script = ExtResource("14")
 
 [node name="Scalpel" type="Node3D" parent="SurgeryArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0.95, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.9, -0.2)
 script = ExtResource("5")
 
 [node name="Forceps" type="Node3D" parent="SurgeryArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0.95, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.9, 0)
 script = ExtResource("10")
 
 [node name="Retractor" type="Node3D" parent="SurgeryArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6, 0.95, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.9, 0.2)
 script = ExtResource("11")
 
 [node name="Suture" type="Node3D" parent="SurgeryArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.8, 0.95, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.9, 0.4)
 script = ExtResource("12")
+
+[node name="TeamLeadSurgeon" type="Node3D" parent="SurgeryArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0, 0)
+script = ExtResource("22")
+member_role = "Lead Surgeon"
+member_color = Color(0.15, 0.4, 0.6, 1)
+
+[node name="TeamAssistant" type="Node3D" parent="SurgeryArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0, 0)
+script = ExtResource("22")
+member_role = "Assistant Surgeon"
+member_color = Color(0.2, 0.5, 0.35, 1)
+
+[node name="TeamScrubNurse" type="Node3D" parent="SurgeryArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0, 1.0)
+script = ExtResource("22")
+member_role = "Scrub Nurse"
+member_color = Color(0.5, 0.3, 0.5, 1)
+
+[node name="TeamAnesthesia" type="Node3D" parent="SurgeryArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.2, 0, -1.0)
+script = ExtResource("22")
+member_role = "Anesthesiologist"
+member_color = Color(0.6, 0.4, 0.2, 1)
 
 [node name="InteractionManager" type="Node" parent="."]
 script = ExtResource("6")
 
+[node name="SurgicalLight" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.5, 0)
+light_color = Color(1, 0.97, 0.92, 1)
+light_energy = 2.5
+spot_angle = 35.0
+spot_attenuation = 1.5
+shadow_enabled = true
+
+[node name="FillLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+light_color = Color(0.9, 0.95, 1, 1)
+light_energy = 0.4
+omni_range = 12.0
+
 [node name="HUD" type="CanvasLayer" parent="."]
+layer = 10
 script = ExtResource("7")
 
 [node name="SimulationControls" type="CanvasLayer" parent="."]
+layer = 10
 script = ExtResource("8")
 
+[node name="AndroidUI" type="CanvasLayer" parent="."]
+layer = 10
+script = ExtResource("23")
+
 [node name="ResultsScreen" type="CanvasLayer" parent="."]
+layer = 20
 script = ExtResource("9")
 
 [node name="MainMenu" type="CanvasLayer" parent="."]
+layer = 30
 script = ExtResource("16")
 
 [node name="RoleAssignmentUI" type="CanvasLayer" parent="."]
+layer = 25
 script = ExtResource("17")
 
 [node name="TutorialUI" type="Control" parent="."]
@@ -197,9 +250,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("21")
-
-[node name="PointLight3D" type="PointLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
-light_color = Color(1, 0.95, 0.9, 1)
-light_energy = 0.8
-light_range = 8.0

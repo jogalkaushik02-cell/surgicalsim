@@ -9,19 +9,18 @@ extends Camera3D
 @export var pan_speed: float = 0.01
 
 var target: Node3D = null
-var distance: float = 5.0
-var rotation_x: float = 0.0
-var rotation_y: float = 0.0
+var distance: float = 4.0
+var rotation_x: float = -0.6
+var rotation_y: float = 0.3
 var is_touching: bool = false
 var touch_start_position: Vector2 = Vector2.ZERO
 var last_touch_position: Vector2 = Vector2.ZERO
 var touch_count: int = 0
 var pinch_start_distance: float = 0.0
-var initial_zoom: float = 5.0
+var initial_zoom: float = 4.0
 var active_touches: Dictionary = {}
 
 func _ready() -> void:
-	# Set initial camera position
 	distance = initial_zoom
 	_update_camera_position()
 
@@ -44,7 +43,6 @@ func _handle_touch(event: InputEventScreenTouch) -> void:
 			last_touch_position = event.position
 			is_touching = true
 		elif touch_count == 2:
-			# Start pinch zoom
 			var other_touch = _get_other_touch(event.index)
 			if other_touch != Vector2.ZERO:
 				pinch_start_distance = touch_start_position.distance_to(other_touch)
@@ -55,7 +53,6 @@ func _handle_touch(event: InputEventScreenTouch) -> void:
 		if touch_count == 0:
 			is_touching = false
 		elif touch_count == 1:
-			# Reset for single touch
 			for i in active_touches:
 				if i != event.index:
 					var touch_pos = active_touches[i]
@@ -67,7 +64,6 @@ func _handle_touch(event: InputEventScreenTouch) -> void:
 func _handle_drag(event: InputEventScreenDrag) -> void:
 	active_touches[event.index] = event.position
 	if touch_count == 1 and is_touching:
-		# Single finger: rotate camera
 		var delta = event.position - last_touch_position
 		rotation_y -= delta.x * rotation_speed
 		rotation_x -= delta.y * rotation_speed
@@ -75,7 +71,6 @@ func _handle_drag(event: InputEventScreenDrag) -> void:
 		last_touch_position = event.position
 		_update_camera_position()
 	elif touch_count == 2:
-		# Two fingers: pinch zoom
 		var other_touch = _get_other_touch(event.index)
 		if other_touch != Vector2.ZERO:
 			var current_distance = event.position.distance_to(other_touch)
@@ -108,30 +103,26 @@ func _get_other_touch(exclude_index: int) -> Vector2:
 	return Vector2.ZERO
 
 func _update_camera_position() -> void:
+	var target_pos = Vector3(0, 1.2, 0)
 	if target:
-		var target_pos = target.global_position
-		var offset = Vector3.ZERO
-		offset.x = distance * cos(rotation_x) * sin(rotation_y)
-		offset.y = distance * sin(rotation_x)
-		offset.z = distance * cos(rotation_x) * cos(rotation_y)
-		global_position = target_pos + offset
-		look_at(target_pos, Vector3.UP)
-	else:
-		var offset = Vector3.ZERO
-		offset.x = distance * cos(rotation_x) * sin(rotation_y)
-		offset.y = distance * sin(rotation_x)
-		offset.z = distance * cos(rotation_x) * cos(rotation_y)
-		global_position = offset
-		look_at(Vector3.ZERO, Vector3.UP)
+		target_pos = target.global_position
+
+	var offset = Vector3.ZERO
+	offset.x = distance * cos(rotation_x) * sin(rotation_y)
+	offset.y = distance * sin(rotation_x)
+	offset.z = distance * cos(rotation_x) * cos(rotation_y)
+	global_position = target_pos + offset
+	look_at(target_pos, Vector3.UP)
 
 func set_target(new_target: Node3D) -> void:
 	target = new_target
 	_update_camera_position()
 
 func reset_camera() -> void:
-	rotation_x = 0.0
-	rotation_y = 0.0
+	rotation_x = -0.6
+	rotation_y = 0.3
 	distance = initial_zoom
+	target = null
 	_update_camera_position()
 	Events.camera_reset.emit()
 	Events.log_event("camera_reset")

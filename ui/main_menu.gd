@@ -412,6 +412,9 @@ func _on_single_player_pressed() -> void:
 	var controls = get_node_or_null("/root/MainScene/SimulationControls")
 	if controls:
 		controls.show()
+	var android_ui = get_node_or_null("/root/MainScene/AndroidUI")
+	if android_ui:
+		android_ui.show()
 	Events.log_event("single_player_selected")
 
 func _on_multiplayer_pressed() -> void:
