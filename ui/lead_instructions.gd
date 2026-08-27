@@ -45,8 +45,8 @@ signal custom_instruction_sent(text: String)
 signal lead_panel_toggled(visible: bool)
 
 func _ready() -> void:
-	_create_ui()
 	hide()
+	_create_ui()
 
 func _create_ui() -> void:
 	panel = PanelContainer.new()

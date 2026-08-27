@@ -18,6 +18,7 @@ signal game_starting()
 signal lobby_closed()
 
 func _ready() -> void:
+	hide()
 	_setup_ui()
 	_connect_signals()
 

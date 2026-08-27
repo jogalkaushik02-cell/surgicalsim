@@ -14,6 +14,7 @@ var bg_color = Color(0.12, 0.12, 0.15)
 signal closed()
 
 func _ready() -> void:
+	hide()
 	_setup_ui()
 	AchievementSystem.achievement_unlocked.connect(_on_achievement_unlocked)
 

@@ -406,6 +406,12 @@ func _on_single_player_pressed() -> void:
 	RoleSystem.is_single_player = true
 	RoleSystem.set_local_role(RoleSystem.Role.LEAD_SURGEON)
 	hide_ui()
+	var hud = get_node_or_null("/root/MainScene/HUD")
+	if hud:
+		hud.show()
+	var controls = get_node_or_null("/root/MainScene/SimulationControls")
+	if controls:
+		controls.show()
 	Events.log_event("single_player_selected")
 
 func _on_multiplayer_pressed() -> void:

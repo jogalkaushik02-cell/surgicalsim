@@ -14,6 +14,7 @@ signal tutorial_completed()
 signal tutorial_skipped()
 
 func _ready() -> void:
+	hide()
 	_setup_ui()
 	Tutorial.tutorial_started.connect(_on_tutorial_started)
 	Tutorial.tutorial_step_changed.connect(_on_tutorial_step_changed)

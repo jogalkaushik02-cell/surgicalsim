@@ -8,8 +8,11 @@ extends CanvasLayer
 @onready var resume_button: Button = null
 
 func _ready() -> void:
+	hide()
 	_create_ui()
 	_update_button_states()
+	Events.simulation_started.connect(func(): show())
+	Events.simulation_ended.connect(func(): hide())
 
 func _create_ui() -> void:
 	var container = VBoxContainer.new()

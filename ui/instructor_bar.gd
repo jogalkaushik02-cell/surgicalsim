@@ -101,6 +101,7 @@ signal instruction_dismissed()
 signal hint_requested()
 
 func _ready() -> void:
+	hide()
 	_create_ui()
 	Events.surgical_state_changed.connect(_on_surgical_state_changed)
 	Events.cut_performed.connect(_on_cut_performed)

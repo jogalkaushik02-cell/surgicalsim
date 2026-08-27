@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://main_scene"]
+[gd_scene load_steps=16 format=3 uid="uid://main_scene"]
 
 [ext_resource type="Script" path="res://core/camera_controller.gd" id="1"]
 [ext_resource type="Script" path="res://patient/operating_table.gd" id="2"]
@@ -21,8 +21,6 @@
 [ext_resource type="Script" path="res://ui/achievement_ui.gd" id="19"]
 [ext_resource type="Script" path="res://ui/surgery_catalog_ui.gd" id="20"]
 [ext_resource type="Script" path="res://ui/online_lobby_ui.gd" id="21"]
-[ext_resource type="Script" path="res://ui/fancy_login_ui.gd" id="22"]
-[ext_resource type="Script" path="res://ui/fancy_register_ui.gd" id="23"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
 sky_top_color = Color(0.2, 0.2, 0.3, 1)
@@ -199,24 +197,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("21")
-
-[node name="FancyLoginUI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("22")
-
-[node name="FancyRegisterUI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("23")
 
 [node name="PointLight3D" type="PointLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)

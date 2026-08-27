@@ -15,6 +15,7 @@ signal surgery_selected(surgery_id: String)
 signal closed()
 
 func _ready() -> void:
+	hide()
 	_setup_ui()
 
 func _setup_ui() -> void:

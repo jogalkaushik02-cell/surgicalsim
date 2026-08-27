@@ -13,9 +13,12 @@ var guidance_label: Label = null
 var bleeding_indicator: PanelContainer = null
 
 func _ready() -> void:
+	hide()
 	is_android = OS.get_name() == "Android"
 	_create_ui()
 	_update_touch_settings()
+	Events.simulation_started.connect(func(): show())
+	Events.simulation_ended.connect(func(): hide())
 
 func _create_ui() -> void:
 	_create_instrument_panel()

@@ -10,10 +10,13 @@ extends CanvasLayer
 @onready var score_label: Label = null
 
 func _ready() -> void:
+	hide()
 	_create_ui()
 	Events.patient_vitals_changed.connect(_on_vitals_changed)
 	Events.cut_performed.connect(_on_cut_performed)
 	Events.surgical_state_changed.connect(_on_surgical_state_changed)
+	Events.simulation_started.connect(func(): show())
+	Events.simulation_ended.connect(func(): hide())
 
 func _create_ui() -> void:
 	var main_container = VBoxContainer.new()
