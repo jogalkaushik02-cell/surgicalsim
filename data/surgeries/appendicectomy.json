@@ -1,0 +1,80 @@
+{
+	"name": "Appendicectomy",
+	"description": "Surgical removal of the appendix",
+	"version": "1.0.0",
+	"is_prototype": true,
+	"anatomy": [
+		{
+			"name": "Appendix",
+			"type": "organ",
+			"position": [0, -0.1, 0.15],
+			"size": [0.08, 0.015, 0.015]
+		},
+		{
+			"name": "Cecum",
+			"type": "organ",
+			"position": [0, -0.15, 0.1],
+			"size": [0.1, 0.08, 0.08]
+		}
+	],
+	"instruments": [
+		"Scalpel",
+		"Forceps",
+		"Retractor",
+		"Suture"
+	],
+	"steps": [
+		{
+			"id": 1,
+			"name": "Incision",
+			"description": "Make incision in abdomen",
+			"instrument": "Scalpel",
+			"target": "Abdomen"
+		},
+		{
+			"id": 2,
+			"name": "Locate Appendix",
+			"description": "Find and expose the appendix",
+			"instrument": "Retractor",
+			"target": "Cecum"
+		},
+		{
+			"id": 3,
+			"name": "Grasp Appendix",
+			"description": "Secure the appendix with forceps",
+			"instrument": "Forceps",
+			"target": "Appendix"
+		},
+		{
+			"id": 4,
+			"name": "Remove Appendix",
+			"description": "Cut and remove the appendix",
+			"instrument": "Scalpel",
+			"target": "Appendix"
+		},
+		{
+			"id": 5,
+			"name": "Close Incision",
+			"description": "Suture the incision closed",
+			"instrument": "Suture",
+			"target": "Incision"
+		}
+	],
+	"evaluation_criteria": [
+		{
+			"name": "Time",
+			"description": "Complete surgery within time limit",
+			"max_score": 100
+		},
+		{
+			"name": "Accuracy",
+			"description": "Follow correct surgical steps",
+			"max_score": 100
+		},
+		{
+			"name": "Patient Safety",
+			"description": "Maintain stable vital signs",
+			"max_score": 100
+		}
+	]
+}
